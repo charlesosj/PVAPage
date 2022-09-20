@@ -1,88 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Contoso Sample Web Chat</title> 
-    <!-- This styling is for the Web Chat demonstration purposes. It is recommended that style is moved to separate file for organization in larger projects -->
+    <meta charset="UTF-8" />
+    <title>MyBot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <style>
         html, body {
             height: 100%;
-        }
-
-        body {
             margin: 0;
-        }
-
-        h1 {
-            font-size: 16px;
-            font-family: Segoe UI;
-            line-height: 20px;
-            color: whitesmoke;
-            display: table-cell;
-            padding: 13px 0px 0px 20px;
-        }
-
-        #heading {
-            background-color: black;
-            height: 50px;
-        }
-
-        .main {
-            margin: 18px;
-            border-radius: 4px;
-        }
-
-        div[role="form"]{
-            background-color: black;
-        }
-
-        #webchat {
-            position: fixed;
-            height: calc(100% - 50px);
-            width: 100%;
-            top: 50px;
+            padding: 0;
             overflow: hidden;
         }
-
     </style>
+        <link href="../../Content/botchat.css"   rel="stylesheet" />
 
+        <link href="/css/webchat-stable/botchat-fullwindow.css" rel="stylesheet" />
 </head>
 <body>
-    <div>
-        <div id="heading">
-            <!-- Change the h1 text to change the bot name -->    
-            <h1>Contoso Bot Name</h1>
-        </div>
-        <div id="webchat" role="main"></div>
-    </div>    
+    <div id="BotChatElement"></div>
+        <script src="Scripts/jquery-1.12.3.js"></script>
+        <script src="Scripts/Custom/botchat.js"></script>
 
-  <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+    <script>
+        var model = {
 
-  <script>
-        const styleOptions = {
+  "userId": "someuserid",
+  "userName": "You",
+  "botId": "846e3917-14e3-45c2-bd62-9c1ea354db5d",
 
-           // Add styleOptions to customize Web Chat canvas
-           hideUploadButton: true
-        };
+  "botName": "botNamehere",
+  "secret": "rRaYZ-XaHfc.KBvAC1rksRp1fDJld2UiCLb5OL1Bp5wT9g34P25JTtw",
 
-        // Add your BOT ID below 
-        var BOT_ID = "846e3917-14e3-45c2-bd62-9c1ea354db5d"; 
-        var theURL = "https://powerva.microsoft.com/api/botmanagement/v1/directline/directlinetoken?botId=" + BOT_ID;
+  "directLineUrl": "https://webchat.botframework.com/v3/directline",
+  "webSocketEnabled": "false"
 
-      fetch(theURL)
-            .then(response => response.json())
-            .then(conversationInfo => {
-                window.WebChat.renderWebChat(
-                    {
-                        directLine: window.WebChat.createDirectLine({
-                            token: conversationInfo.token,
-                        }),
-                        styleOptions
-                    },
-                    document.getElementById('webchat')
-                );
-            })
-            .catch(err => console.error("An error occurred: " + err));
+};
+    </script>
+    <script>
+        BotChat.App({
+            directLine: {
+                secret: model.secret,
+                token: model.token,
+                domain: model.directLineUrl,
+                webSocket: false
+            },
+            user: { id: model.userId, name: model.userName },
+            bot: { id: model.botId, name: model.botName },
+            resize: 'window',
+            locale: 'en'
+        }, document.getElementById("BotChatElement"));
+
 
     </script>
-  </body>
+   <script>
+   $(document).ready(function () {
+       var id = document.getElementsByClassName("wc-header");         
+            id[0].innerHTML="Click for Help";
+        });
+   </script>
+</body>
 </html>
