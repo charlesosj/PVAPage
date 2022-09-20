@@ -1,1 +1,88 @@
-<!DOCTYPE html><html><body><iframe src="https://web.powerva.microsoft.com/environments/9ff2eb1a-63c2-eb7c-a378-32e8b8555ba6/bots/new_bot_846e391714e345c2bd629c1ea354db5d/webchat" frameborder="0" style="width: 100%; height: 100%;"></iframe></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contoso Sample Web Chat</title> 
+    <!-- This styling is for the Web Chat demonstration purposes. It is recommended that style is moved to separate file for organization in larger projects -->
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 16px;
+            font-family: Segoe UI;
+            line-height: 20px;
+            color: whitesmoke;
+            display: table-cell;
+            padding: 13px 0px 0px 20px;
+        }
+
+        #heading {
+            background-color: black;
+            height: 50px;
+        }
+
+        .main {
+            margin: 18px;
+            border-radius: 4px;
+        }
+
+        div[role="form"]{
+            background-color: black;
+        }
+
+        #webchat {
+            position: fixed;
+            height: calc(100% - 50px);
+            width: 100%;
+            top: 50px;
+            overflow: hidden;
+        }
+
+    </style>
+
+</head>
+<body>
+    <div>
+        <div id="heading">
+            <!-- Change the h1 text to change the bot name -->    
+            <h1>Contoso Bot Name</h1>
+        </div>
+        <div id="webchat" role="main"></div>
+    </div>    
+
+  <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+
+  <script>
+        const styleOptions = {
+
+           // Add styleOptions to customize Web Chat canvas
+           hideUploadButton: true
+        };
+
+        // Add your BOT ID below 
+        var BOT_ID = "846e3917-14e3-45c2-bd62-9c1ea354db5d"; 
+        var theURL = "https://powerva.microsoft.com/api/botmanagement/v1/directline/directlinetoken?botId=" + BOT_ID;
+
+      fetch(theURL)
+            .then(response => response.json())
+            .then(conversationInfo => {
+                window.WebChat.renderWebChat(
+                    {
+                        directLine: window.WebChat.createDirectLine({
+                            token: conversationInfo.token,
+                        }),
+                        styleOptions
+                    },
+                    document.getElementById('webchat')
+                );
+            })
+            .catch(err => console.error("An error occurred: " + err));
+
+    </script>
+  </body>
+</html>
