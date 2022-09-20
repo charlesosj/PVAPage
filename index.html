@@ -17,46 +17,20 @@
         <link href="/css/webchat-stable/botchat-fullwindow.css" rel="stylesheet" />
 </head>
 <body>
-    <div id="BotChatElement"></div>
-        <script src="Scripts/jquery-1.12.3.js"></script>
-        <script src="Scripts/Custom/botchat.js"></script>
+<script>
+(function () {
+    var div = document.createElement("div");
+    document.getElementsByTagName('body')[0].appendChild(div);
+    div.outerHTML = "<div id='botDiv' style='height: 38px; position: fixed; bottom: 0; z-index: 1000; background-color: #fff'><div id='botTitleBar' style='height: 38px; width: 400px; position:fixed; cursor: pointer;'></div><iframe width='400px' height='600px' src='https://web.powerva.microsoft.com/environments/9ff2eb1a-63c2-eb7c-a378-32e8b8555ba6/bots/new_bot_846e391714e345c2bd629c1ea354db5d/webchat'></iframe></div>"; 
 
-    <script>
-        var model = {
-
-  "userId": "someuserid",
-  "userName": "You",
-  "botId": "846e3917-14e3-45c2-bd62-9c1ea354db5d",
-
-  "botName": "botNamehere",
-  "secret": "rRaYZ-XaHfc.KBvAC1rksRp1fDJld2UiCLb5OL1Bp5wT9g34P25JTtw",
-
-  "directLineUrl": "https://webchat.botframework.com/v3/directline",
-  "webSocketEnabled": "false"
-
-};
+    document.querySelector('body').addEventListener('click', function (e) {
+        e.target.matches = e.target.matches || e.target.msMatchesSelector;
+        if (e.target.matches('#botTitleBar')) { 
+            var botDiv = document.querySelector('#botDiv'); 
+            botDiv.style.height = botDiv.style.height == '600px' ? '38px' : '600px';
+        };
+    });
+}());
     </script>
-    <script>
-        BotChat.App({
-            directLine: {
-                secret: model.secret,
-                token: model.token,
-                domain: model.directLineUrl,
-                webSocket: false
-            },
-            user: { id: model.userId, name: model.userName },
-            bot: { id: model.botId, name: model.botName },
-            resize: 'window',
-            locale: 'en'
-        }, document.getElementById("BotChatElement"));
-
-
-    </script>
-   <script>
-   $(document).ready(function () {
-       var id = document.getElementsByClassName("wc-header");         
-            id[0].innerHTML="Click for Help";
-        });
-   </script>
-</body>
+    </body>
 </html>
